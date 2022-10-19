@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="2"
-  DTS:VersionGUID="{E2688551-61F7-41A2-B47F-BDF065034AD0}">
+  DTS:VersionBuild="3"
+  DTS:VersionGUID="{E9BBA07D-42BF-4A25-9C93-1C1464FE90BD}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,6 +26,30 @@
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
           DTS:ConnectionString="Data Source=.;Initial Catalog=ejemplo_destino;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.ejemplo_destino 1]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{04BB1664-AB4C-4A9A-8617-87B912A75AFE}"
+      DTS:ObjectName="LocalHost.ejemplo_destino 1">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=ejemplo_destino;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.ejemplo_origen]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4015BFC6-25F0-4108-A35D-6DFD53EBA150}"
+      DTS:ObjectName="LocalHost.ejemplo_origen">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=ejemplo_origen;Provider=MSOLEDBSQL.1;Integrated Security=SSPI;Auto Translate=False;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -48,6 +72,344 @@
           SQLTask:SqlStatementSource="delete from H_ventas;&#xA;delete from D_clientes;&#xA;delete from D_sucursales;&#xA;delete from D_productos;&#xA;delete from D_trabajadores;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Carga de D_clientes DWH destino"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{20E3848B-6032-40B8-9F1B-9F042CE7216A}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Carga de D_clientes DWH destino"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Carga de D_clientes DWH destino\Destino D_clientes"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="Destino D_clientes"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[D_clientes]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.ejemplo_destino 1]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.ejemplo_destino 1]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].Columns[id_cliente]"
+                      cachedDataType="i4"
+                      cachedName="id_cliente"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[id_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[id_cliente]" />
+                    <inputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].Columns[nombre_cliente]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="30"
+                      cachedName="nombre_cliente"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[nombre_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[nombre_cliente]" />
+                    <inputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].Columns[telefono_cliente]"
+                      cachedDataType="i4"
+                      cachedName="telefono_cliente"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[telefono_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[telefono_cliente]" />
+                    <inputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].Columns[edad_cliente]"
+                      cachedDataType="i4"
+                      cachedName="edad_cliente"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[edad_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[edad_cliente]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[id_cliente]"
+                      dataType="i4"
+                      name="id_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[nombre_cliente]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="nombre_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[telefono_cliente]"
+                      dataType="i4"
+                      name="telefono_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input].ExternalColumns[edad_cliente]"
+                      dataType="i4"
+                      name="edad_cliente" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Carga de D_clientes DWH destino\Origen D_cliente"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="Origen D_cliente"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[D_cliente]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.ejemplo_origen]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.ejemplo_origen]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[id_cliente]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[id_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[id_cliente]"
+                      name="id_cliente"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[nombre_cliente]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[nombre_cliente]"
+                      length="30"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[nombre_cliente]"
+                      name="nombre_cliente"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[telefono_cliente]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[telefono_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[telefono_cliente]"
+                      name="telefono_cliente"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[edad_cliente]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[edad_cliente]"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].Columns[edad_cliente]"
+                      name="edad_cliente"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[id_cliente]"
+                      dataType="i4"
+                      name="id_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[nombre_cliente]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      name="nombre_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[telefono_cliente]"
+                      dataType="i4"
+                      name="telefono_cliente" />
+                    <externalMetadataColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output].ExternalColumns[edad_cliente]"
+                      dataType="i4"
+                      name="edad_cliente" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[id_cliente]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[id_cliente]"
+                      name="id_cliente" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[nombre_cliente]"
+                      codePage="1252"
+                      dataType="str"
+                      length="30"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[nombre_cliente]"
+                      name="nombre_cliente" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[telefono_cliente]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[telefono_cliente]"
+                      name="telefono_cliente" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[edad_cliente]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[edad_cliente]"
+                      name="edad_cliente" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Carga de D_clientes DWH destino.Paths[OLE DB Source Output]"
+              endId="Package\Carga de D_clientes DWH destino\Destino D_clientes.Inputs[OLE DB Destination Input]"
+              name="OLE DB Source Output"
+              startId="Package\Carga de D_clientes DWH destino\Origen D_cliente.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
@@ -65,8 +427,76 @@
           Size="225,42"
           Id="Package\Borrar elementos DWH destino"
           TopLeft="142,94" />
+        <NodeLayout
+          Size="238,42"
+          Id="Package\Carga de D_clientes DWH destino"
+          TopLeft="394,189" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
+  <TaskHost
+    design-time-name="Package\Carga de D_clientes DWH destino">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="157,42"
+          Id="Package\Carga de D_clientes DWH destino\Origen D_cliente"
+          TopLeft="249,27" />
+        <NodeLayout
+          Size="166,42"
+          Id="Package\Carga de D_clientes DWH destino\Destino D_clientes"
+          TopLeft="250,160" />
+        <EdgeLayout
+          Id="Package\Carga de D_clientes DWH destino.Paths[OLE DB Source Output]"
+          TopLeft="330.25,69">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,91"
+              Start="0,0"
+              End="0,83.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,83.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga de D_clientes DWH destino\Origen D_cliente">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Carga de D_clientes DWH destino\Destino D_clientes">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
 </Objects>]]></DTS:DesignTimeProperties>
 </DTS:Executable>
